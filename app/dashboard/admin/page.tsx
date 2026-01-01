@@ -31,7 +31,7 @@ export default function AdminDashboard() {
       // Fetching broad data using existing endpoints
       const [requestsData, providersData, usersData] = await Promise.all([
         apiClient.request<any>('/requests/'),
-        apiClient.getProviders(),
+        apiClient.getProviders() as any,
         apiClient.request<any>('/users/')
       ]);
 
@@ -42,15 +42,15 @@ export default function AdminDashboard() {
       // Handle both array and paginated response formats
       const requests = Array.isArray(requestsData) 
         ? requestsData 
-        : (requestsData?.results || requestsData?.data || []);
+        : ((requestsData as any)?.results || (requestsData as any)?.data || []);
       
       const providersList = Array.isArray(providersData) 
         ? providersData 
-        : (providersData?.results || providersData?.data || []);
+        : ((providersData as any)?.results || (providersData as any)?.data || []);
       
       const usersList = Array.isArray(usersData) 
         ? usersData 
-        : (usersData?.results || usersData?.data || []);
+        : ((usersData as any)?.results || (usersData as any)?.data || []);
       
       console.log('Admin Dashboard - Parsed requests:', requests);
       console.log('Admin Dashboard - Parsed providers:', providersList);
